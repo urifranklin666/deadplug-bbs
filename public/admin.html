@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b09">
+  <title>BBS Sysop</title>
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+  <div id="login" class="login-view" hidden>
+    <form id="login-form" class="login-card">
+      <span class="eyebrow">SYSOP ACCESS</span>
+      <h1>Board administration</h1>
+      <p>Sign in with a level 100 BBS account.</p>
+      <label class="field"><span>Handle</span><input id="login-handle" autocomplete="username" required></label>
+      <label class="field"><span>Password</span><input id="login-password" type="password" autocomplete="current-password" required></label>
+      <button type="submit">Sign in</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </form>
+  </div>
+
+  <div id="app" class="app" hidden>
+    <aside>
+      <div class="brand">
+        <span class="eyebrow">SYSOP</span>
+        <strong id="brand-name">BBS</strong>
+      </div>
+      <nav id="nav">
+        <button type="button" data-view="dashboard" class="active">Dashboard</button>
+        <button type="button" data-view="users">Users</button>
+        <button type="button" data-view="boards">Boards</button>
+        <button type="button" data-view="files">Files</button>
+        <button type="button" data-view="oneliners">One-liners</button>
+        <button type="button" data-view="chat">Chat</button>
+        <button type="button" data-view="doors">Doors</button>
+        <button type="button" data-view="settings">Settings</button>
+        <button type="button" data-view="audit">Audit log</button>
+      </nav>
+      <div class="aside-foot">
+        <span id="admin-handle"></span>
+        <button type="button" id="logout">Sign out</button>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topline">
+        <h1 id="view-title">Dashboard</h1>
+        <span id="toast" class="toast" role="status"></span>
+      </header>
+
+      <section id="view-dashboard" class="view">
+        <div id="stats" class="cards"></div>
+        <div class="grid-2">
+          <div class="panel">
+            <h2>Broadcast to everyone</h2>
+            <form id="broadcast-form" class="inline-form">
+              <input id="broadcast-message" maxlength="200" placeholder="Message to all connected users" required>
+              <button type="submit">Send</button>
+            </form>
+          </div>
+          <div class="panel">
+            <h2>Who is online</h2>
+            <div id="online"></div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <h2>Recent moderation</h2>
+            <div id="recent-audit"></div>
+          </div>
+          <div class="panel">
+            <h2>Recent posts</h2>
+            <div id="recent-posts"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-users" class="view" hidden>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Users</h2>
+            <form id="user-search" class="inline-form compact">
+              <input id="user-query" placeholder="Search handle, name, location">
+              <button type="submit">Search</button>
+            </form>
+          </div>
+          <div id="users-table"></div>
+        </div>
+        <div class="panel">
+          <h2>Create account</h2>
+          <form id="user-create" class="form-grid">
+            <label class="field"><span>Handle</span><input name="handle" required maxlength="20"></label>
+            <label class="field"><span>Password</span><input name="password" type="password" required minlength="6"></label>
+            <label class="field"><span>Level</span><input name="level" type="number" value="10" min="0" max="100"></label>
+            <label class="check"><input name="validated" type="checkbox" checked> Validated</label>
+            <button type="submit">Create user</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="view-boards" class="view" hidden>
+        <div class="panel">
+          <h2>Message boards</h2>
+          <div id="boards-table"></div>
+        </div>
+        <div class="panel">
+          <h2>Add board</h2>
+          <form id="board-create" class="form-grid">
+            <label class="field"><span>Name</span><input name="name" required maxlength="40"></label>
+            <label class="field"><span>Description</span><input name="description" maxlength="200"></label>
+            <label class="field"><span>Minimum level</span><input name="minLevel" type="number" value="0" min="0" max="100"></label>
+            <label class="field"><span>Sort order</span><input name="sortOrder" type="number" value="100"></label>
+            <label class="check"><input name="readOnly" type="checkbox"> Read-only</label>
+            <button type="submit">Add board</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Recent posts</h2>
+          <div id="posts-table"></div>
+        </div>
+      </section>
+
+      <section id="view-files" class="view" hidden>
+        <div class="panel">
+          <h2>File areas</h2>
+          <div id="areas-table"></div>
+        </div>
+        <div class="panel">
+          <h2>Add file area</h2>
+          <form id="area-create" class="form-grid">
+            <label class="field"><span>Name</span><input name="name" required maxlength="40"></label>
+            <label class="field"><span>Description</span><input name="description" maxlength="200"></label>
+            <label class="field"><span>Minimum level</span><input name="minLevel" type="number" value="0" min="0" max="100"></label>
+            <label class="field"><span>Sort order</span><input name="sortOrder" type="number" value="100"></label>
+            <button type="submit">Add area</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Files</h2>
+          <div id="files-table"></div>
+        </div>
+      </section>
+
+      <section id="view-oneliners" class="view" hidden>
+        <div class="panel">
+          <h2>One-liner wall</h2>
+          <div id="oneliners-table"></div>
+        </div>
+      </section>
+
+      <section id="view-chat" class="view" hidden>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Recent chat</h2>
+            <button type="button" id="clear-chat" class="danger">Clear chat history</button>
+          </div>
+          <div id="chat-list"></div>
+        </div>
+      </section>
+
+      <section id="view-doors" class="view" hidden>
+        <div class="panel">
+          <h2>Door games</h2>
+          <div id="doors-table"></div>
+        </div>
+        <div class="panel">
+          <h2>Add door</h2>
+          <form id="door-create" class="form-grid">
+            <label class="field"><span>Name</span><input name="name" required maxlength="40"></label>
+            <label class="field"><span>Description</span><input name="description" maxlength="200"></label>
+            <label class="field"><span>Kind</span>
+              <select name="kind"><option value="builtin">Built-in</option><option value="external">External</option></select>
+            </label>
+            <label class="field"><span>Built-in key</span>
+              <select name="builtin"><option value="blackjack">blackjack</option><option value="trivia">trivia</option><option value="dungeon">dungeon</option></select>
+            </label>
+            <label class="field"><span>Command (external)</span><input name="command" placeholder="e.g. /opt/doors/lord/start.sh"></label>
+            <label class="field"><span>Arguments JSON</span><input name="args" value="[]"></label>
+            <label class="field"><span>Drop file</span>
+              <select name="dropFile"><option>DORINFO1.DEF</option><option>DOOR.SYS</option><option>CHAIN.TXT</option><option>none</option></select>
+            </label>
+            <label class="field"><span>Timeout (seconds)</span><input name="timeoutSeconds" type="number" value="900" min="30"></label>
+            <label class="field"><span>Minimum level</span><input name="minLevel" type="number" value="10" min="0" max="100"></label>
+            <label class="check"><input name="pty" type="checkbox" checked> Allocate a pseudo-terminal</label>
+            <label class="check"><input name="enabled" type="checkbox" checked> Enabled</label>
+            <button type="submit">Add door</button>
+          </form>
+          <p class="hint">Command and arguments support %DROPDIR%, %DROPFILE%, %HANDLE%, %NODE%, %BBSNAME% and %LEVEL%. External doors run as the BBS service user inside the data directory.</p>
+        </div>
+      </section>
+
+      <section id="view-settings" class="view" hidden>
+        <div class="panel">
+          <h2>Board settings</h2>
+          <form id="settings-form" class="settings-form"></form>
+        </div>
+      </section>
+
+      <section id="view-audit" class="view" hidden>
+        <div class="panel">
+          <h2>Audit log</h2>
+          <div id="audit-table"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

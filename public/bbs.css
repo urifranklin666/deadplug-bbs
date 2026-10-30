@@ -1,0 +1,168 @@
+:root {
+  --bg: #04050a;
+  --panel: #0a0d18;
+  --line: #1c2440;
+  --text: #a8e2ff;
+  --dim: #4a5a75;
+  --accent: #00e5ff;
+  --accent-2: #ff3ec8;
+  --warn: #ffe66d;
+  --danger: #ff4d6d;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+#bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  background: linear-gradient(180deg, #0b1024, #05070f);
+  border-bottom: 1px solid var(--line);
+  box-shadow: inset 0 -1px 0 0 rgba(255, 62, 200, 0.35);
+  flex: 0 0 auto;
+  min-height: 2.4rem;
+}
+
+#brand {
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.45), 0 0 22px rgba(255, 62, 200, 0.25);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 45vw;
+}
+
+.pill {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  color: var(--dim);
+  white-space: nowrap;
+}
+.pill.online { color: #04050a; background: var(--accent); border-color: var(--accent); }
+.pill.connecting { color: var(--warn); border-color: #4a4420; }
+.pill.offline { color: var(--danger); border-color: #4a1c2a; }
+
+.spacer { flex: 1; }
+
+#bar button {
+  background: #0b1024;
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.72rem;
+  padding: 0.22rem 0.45rem;
+  cursor: pointer;
+}
+#bar button:hover, #bar button:focus-visible { color: var(--accent); border-color: #2b3f73; outline: none; }
+
+.themes { display: flex; gap: 0.25rem; margin-right: 0.25rem; }
+.swatch { width: 1.4rem; height: 1.4rem; padding: 0 !important; border-radius: 50% !important; }
+.swatch.scene { background: linear-gradient(135deg, #00e5ff 0 45%, #ff3ec8 55% 100%); border-color: #00e5ff !important; }
+.swatch.green { background: #37ff7f; border-color: #37ff7f !important; }
+.swatch.amber { background: #ffb000; border-color: #ffb000 !important; }
+.swatch.mono { background: #d8e6dd; border-color: #d8e6dd !important; }
+
+#screen {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0.35rem 0.5rem;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 130, 255, 0.16), transparent 62%),
+    radial-gradient(ellipse at 50% 100%, rgba(255, 62, 200, 0.1), transparent 68%),
+    var(--bg);
+}
+
+#terminal {
+  width: 100%;
+  height: 100%;
+}
+
+#terminal .xterm { height: 100%; }
+#terminal .xterm-viewport { background: transparent !important; scrollbar-color: #1c2440 transparent; }
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 5, 10, 0.85);
+  backdrop-filter: blur(2px);
+  z-index: 5;
+}
+#overlay[hidden] { display: none; }
+
+.overlay-card {
+  max-width: 28rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 8px;
+  text-align: center;
+}
+.overlay-card h1 { font-size: 1.05rem; letter-spacing: 0.08em; margin: 0 0 0.6rem; color: var(--accent); }
+.overlay-card p { color: var(--dim); font-size: 0.85rem; line-height: 1.5; }
+.overlay-card button, #reconnect {
+  margin-top: 0.6rem;
+  background: var(--accent);
+  color: #04050a;
+  border: 0;
+  border-radius: 4px;
+  padding: 0.5rem 1.1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#keys {
+  display: none;
+  gap: 0.3rem;
+  padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
+  background: #05070f;
+  border-top: 1px solid var(--line);
+  overflow-x: auto;
+  flex: 0 0 auto;
+}
+#keys button {
+  background: #0b1024;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.7rem;
+  padding: 0.45rem 0.55rem;
+  min-width: 2.5rem;
+  cursor: pointer;
+}
+#keys button:active { background: #17203c; }
+
+@media (max-width: 720px), (pointer: coarse) {
+  #keys { display: flex; }
+  #bar { min-height: 2.2rem; padding: 0.3rem 0.5rem; }
+  #brand { font-size: 0.76rem; max-width: 38vw; }
+  .swatch { display: none; }
+  #screen { padding: 0.2rem; }
+}

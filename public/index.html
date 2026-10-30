@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#04050a">
+  <title>BBS</title>
+  <link rel="stylesheet" href="/vendor/xterm/css/xterm.css">
+  <link rel="stylesheet" href="/bbs.css">
+</head>
+<body>
+  <header id="bar">
+    <span id="brand">BBS</span>
+    <span id="status" class="pill connecting">connecting</span>
+    <span class="spacer"></span>
+    <div class="themes" role="group" aria-label="Colour theme">
+      <button type="button" data-theme="scene" class="swatch scene" title="ANSI scene" aria-label="ANSI scene"></button>
+      <button type="button" data-theme="green" class="swatch green" title="Green phosphor" aria-label="Green phosphor"></button>
+      <button type="button" data-theme="amber" class="swatch amber" title="Amber phosphor" aria-label="Amber phosphor"></button>
+      <button type="button" data-theme="mono" class="swatch mono" title="Monochrome" aria-label="Monochrome"></button>
+    </div>
+    <button type="button" id="font-dec" title="Smaller text" aria-label="Smaller text">A−</button>
+    <button type="button" id="font-inc" title="Larger text" aria-label="Larger text">A+</button>
+  </header>
+
+  <main id="screen">
+    <div id="terminal" aria-label="BBS terminal"></div>
+    <div id="overlay" hidden>
+      <div class="overlay-card">
+        <h1 id="overlay-title">Connection closed</h1>
+        <p id="overlay-text">The board hung up. Reconnect when you are ready.</p>
+        <button type="button" id="reconnect">Reconnect</button>
+      </div>
+    </div>
+  </main>
+
+  <footer id="keys" aria-label="Terminal keys">
+    <button type="button" data-key="esc">ESC</button>
+    <button type="button" data-key="tab">TAB</button>
+    <button type="button" data-key="up">↑</button>
+    <button type="button" data-key="down">↓</button>
+    <button type="button" data-key="left">←</button>
+    <button type="button" data-key="right">→</button>
+    <button type="button" data-key="ctrl-c">CTRL-C</button>
+    <button type="button" data-key="ctrl-u">CTRL-U</button>
+    <button type="button" data-key="enter">ENTER</button>
+  </footer>
+
+  <script src="/vendor/xterm/lib/xterm.js"></script>
+  <script src="/vendor/addon-fit/lib/addon-fit.js"></script>
+  <script src="/vendor/addon-web-links/lib/addon-web-links.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050806">
+  <title>Upload — BBS</title>
+  <link rel="stylesheet" href="/upload.css">
+</head>
+<body>
+  <main>
+    <header>
+      <span class="eyebrow">FILE TRANSFER</span>
+      <h1>Upload to the board</h1>
+      <p id="context">Checking your upload ticket…</p>
+    </header>
+
+    <form id="upload-form" hidden>
+      <label id="drop-zone" for="file-input" class="drop-zone">
+        <input id="file-input" type="file" required>
+        <span id="drop-label">Choose a file or drop it here</span>
+      </label>
+
+      <label class="field">
+        <span>Description (optional)</span>
+        <input id="description" type="text" maxlength="200" placeholder="What is this file?">
+      </label>
+
+      <div class="meta">
+        <span id="limit"></span>
+        <span id="size"></span>
+      </div>
+
+      <button id="submit" type="submit">Upload file</button>
+      <p id="message" role="status"></p>
+    </form>
+
+    <p id="error" class="error" hidden></p>
+    <a id="back" class="back" href="/">Return to the board</a>
+  </main>
+  <script src="/upload.js"></script>
+</body>
+</html>

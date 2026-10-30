@@ -1,0 +1,85 @@
+:root {
+  --bg: #050806;
+  --panel: #0b110d;
+  --line: #1b2a20;
+  --text: #d8e6dd;
+  --dim: #6b8a76;
+  --accent: #37ff7f;
+  --danger: #ff6b6b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: radial-gradient(ellipse at 50% 0%, rgba(24, 60, 38, 0.28), transparent 60%), var(--bg);
+  color: var(--text);
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+main {
+  width: min(34rem, 100%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.6rem;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.eyebrow { font-size: 0.65rem; letter-spacing: 0.22em; color: var(--dim); }
+h1 { font-size: 1.3rem; margin: 0.5rem 0; color: var(--accent); letter-spacing: 0.04em; }
+#context { color: var(--dim); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.2rem; }
+
+form { display: flex; flex-direction: column; gap: 1rem; }
+
+.drop-zone {
+  display: grid;
+  place-items: center;
+  gap: 0.4rem;
+  border: 1px dashed #2c4a36;
+  border-radius: 8px;
+  background: #070d09;
+  padding: 2.2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  color: var(--dim);
+  transition: border-color 0.15s, color 0.15s;
+}
+.drop-zone:hover, .drop-zone.dragover { border-color: var(--accent); color: var(--accent); }
+.drop-zone input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.drop-zone.has-file { border-style: solid; color: var(--text); }
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.75rem; color: var(--dim); }
+.field input {
+  background: #070d09;
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 5px;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  font-size: 0.9rem;
+}
+.field input:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+
+.meta { display: flex; justify-content: space-between; color: var(--dim); font-size: 0.72rem; }
+
+button {
+  background: var(--accent);
+  color: #041008;
+  border: 0;
+  border-radius: 5px;
+  padding: 0.7rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+button:disabled { opacity: 0.5; cursor: progress; }
+
+#message { min-height: 1.4rem; font-size: 0.82rem; color: var(--accent); margin: 0; }
+.error { color: var(--danger); font-size: 0.85rem; line-height: 1.5; }
+.back { display: inline-block; margin-top: 1.2rem; color: var(--dim); font-size: 0.8rem; text-decoration: none; }
+.back:hover { color: var(--accent); }
